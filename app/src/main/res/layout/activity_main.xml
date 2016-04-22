@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Parent linear layout with vertical orientation -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp">
+        android:background="#000000"
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:id="@+id/label"
+        android:gravity="center|top"
+        android:textColor="#FFFFFF"
+        android:text="Press the button to see view the statistics..." android:padding="5dip"
+        android:layout_weight="0.64" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView1"
+        android:background="#000000"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_gravity="center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+
+
+
+        <Button
+            android:id="@+id/buttonGallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search Gallery"
+            android:layout_gravity="right"
+            android:onClick="buttonGallery" />
+
+        <Button
+            android:id="@+id/buttonNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:layout_gravity="right" />
+
+        <Button
+            android:id="@+id/buttonPrev"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Previous" />
+    </LinearLayout>
+</LinearLayout>
