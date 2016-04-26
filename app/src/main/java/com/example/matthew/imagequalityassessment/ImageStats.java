@@ -72,12 +72,14 @@ class ImageStats
     double GoodSharp = 2700;
     double GoodOrient = 100;
 
-    /*testing including perceived lum*/
+
+
+    /*Set number values to statistics to be computed*/
     public enum Stats
     {
-        STD_LUM(0), Per_Lum(1), CONTRAST(2), FACE_ORIENTATION_INDEX(3), SHARPNESS(4);
-        int value;
-        private Stats(int value)
+        STD_LUM(0), CONTRAST(1), FACE_ORIENTATION_INDEX(2), SHARPNESS(3);
+       int value;
+       private Stats(int value)
         {
             this.value = value;
         }
@@ -88,29 +90,9 @@ class ImageStats
     double[] getStats()
     {
         if(!this.valid) throw new IllegalStateException();
-        return new double[]{avgStandardLum, avgPerceivedLum, avgContrast,faceOrientationIndex,avgSharp};
+        return new double[]{avgStandardLum, avgContrast,faceOrientationIndex,avgSharp};
 
     }
-
-    /*Set number values to statistics to be computed*/
-    //public enum Stats
-    //{
-    //    STD_LUM(0), CONTRAST(1), FACE_ORIENTATION_INDEX(2), SHARPNESS(3);
-    //    int value;
-    //    private Stats(int value)
-    //    {
-    //        this.value = value;
-    //    }
-    //    public int getValue() {return this.value;}
-    //};
-
-    /*Array of statistics for image*/
-    //double[] getStats()
-    //{
-    //    if(!this.valid) throw new IllegalStateException();
-    //    return new double[]{avgStandardLum, avgContrast,faceOrientationIndex,avgSharp};
-//
-//    }
 
     /*Compute the next pixel to the right*/
     void moveWindowRight(int windowX, int windowY)

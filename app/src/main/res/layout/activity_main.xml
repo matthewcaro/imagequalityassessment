@@ -16,7 +16,8 @@
         android:id="@+id/label"
         android:gravity="center|top"
         android:textColor="#FFFFFF"
-        android:text="Press the button to see view the statistics..." android:padding="5dip"
+        android:text="Press the button to see view the statistics..."
+        android:padding="5dip"
         android:layout_weight="0.64" />
     </LinearLayout>
     <ImageView
@@ -48,17 +49,6 @@
             android:layout_gravity="right"
             android:onClick="buttonGallery" />
 
-        <Button
-            android:id="@+id/buttonNext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            android:layout_gravity="right" />
 
-        <Button
-            android:id="@+id/buttonPrev"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Previous" />
     </LinearLayout>
 </LinearLayout>

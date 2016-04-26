@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.example.matthew.imagequalityassessment"
         minSdkVersion 22
-        targetSdkVersion 22
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
