@@ -1,77 +1,57 @@
 package com.example.matthew.imagequalityassessment;
 
-
-import android.app.Activity;
-import android.content.Context;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.FileNotFoundException;
+import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLConnection;
+import java.util.ArrayList;
 
+/**
+ * Example code for picking images in android
+ */
+public class MainActivity extends AppCompatActivity {
 
-import android.content.res.AssetManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.graphics.*;
-import android.media.FaceDetector;
-
-import java.util.Vector;
-
-
-
-public class MainActivity extends Activity {
-
-
-
-
-    public static final String IMAGE_TYPE = "image/*";
+    // this is the action code we use in our intent,
+    // this way we know we're looking at the response from our own action
     private static final int SELECT_SINGLE_PICTURE = 101;
 
+    private static final int SELECT_MULTIPLE_PICTURE = 201;
 
-    int count = 0;
-
-    /* The file index */
-    int imgIdx = 0;
-
-    /* The list of files */
-    Vector<String> files = new Vector<String>();
-
-
-    /* Get the reference to the image object */
-    ImageView imageView = null;
+    public static final String IMAGE_TYPE = "image/*";
 
     /* Get the reference to the text label */
     TextView label = null;
 
-    /* By how much to scale down the original image.
-     * During tests, I sometimes had to scale down
-     * the image size, as some old phones ran out
-     * of memory.
-     */
-    final int IMAGE_SCALE_DOWN_FACTOR = 2;
 
-    /**
-     * Displays the next image
-     * @param image - the image to show
-     * @param fileName - the name of the image file
-     */
+    private ImageView selectedImagePreview;
 
 
-
-
-
-    void showImage(Bitmap image, String fileName)
+    void showImage(Bitmap image)
     {
 
-        label.setText("Loading...");
+        //label.setText("Loading...");
 
 		/* Get the starting time */
         long startTime = 0;
@@ -90,7 +70,7 @@ public class MainActivity extends Activity {
         String results = imageStats.result;
 
 		 /* Create the labels */
-        String[] labels = new String[]{"Standard Luminosity: ","Perceived Luminosity: ", "Contrast: ", "Face orientation: ", "Sharpness: "};
+        String[] labels = new String[]{"Standard Luminosity: ", "Contrast: ", "Face orientation: ", "Sharpness: "};
 
 		 /* The string of statistics */
         StringBuffer strStatsBuff = new StringBuffer();
@@ -105,191 +85,159 @@ public class MainActivity extends Activity {
         }
 
 	     /* Add the file name */
-        strStatsBuff.append("File name: ");
-        strStatsBuff.append(fileName);
         strStatsBuff.append("\n");
         strStatsBuff.append(results);
 
 
 	      /* Set the label and show the image */
         label.setText(strStatsBuff.toString());
-        imageView.setImageBitmap(image);
+
+
 
     }
 
-
-    /**
-     * Reads the bitmap image from the assets library
-     * @param fileName - the file name
-     * @return - The loaded image
-     */
-    Bitmap loadBitmapFromAssets(String fileName)
-    {
-
-		/* The bitmap */
-        Bitmap bitmap = null;
-
-		/* Load the image */
-        try
-        {
-            System.out.println("Trying to load file <" + fileName + "> from assets");
-
-			/* Load the image */
-            InputStream input = getAssets().open(fileName);
-            bitmap = BitmapFactory.decodeStream(input);
-            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()/IMAGE_SCALE_DOWN_FACTOR, bitmap.getHeight()/IMAGE_SCALE_DOWN_FACTOR, false);
-        }
-        catch(Exception e)
-        {
-            System.err.println("Something went wrong...");
-            e.printStackTrace();
-        }
-
-        return bitmap;
-    }
-
-
-    /**
-     * This is where the program execution begins
-     * @param savedInstanceState - the instance of the application.
-     */
-    private final int REQUEST_CODE_EXTERNAL_IMAGE = 2000;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-		/* Call the constructor of the super-class */
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-        Button buttonGallery = (Button) findViewById(R.id.buttonGallery);
-
-
-        buttonGallery.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                // choose picture from gallery
-                Intent intent = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                startActivityForResult(intent,
-                        REQUEST_CODE_EXTERNAL_IMAGE);
-
-            }
-        });
-
-
-
-
-
-
-		/* Get the asset manager */
-        AssetManager am = getAssets();
-
-
-		/* Populate the file list */
-        try {
-
-            for(String s: am.list(""))
-            {
-                if(s.endsWith(".jpg") || s.endsWith(".png"))
-                {
-                    files.add(s);
-
-                }
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
         setContentView(R.layout.activity_main);
 
-	  	/* Get the reference to the image object */
-        imageView= (ImageView)findViewById(R.id.imageView1);
-
-	  	/* Get the reference to the text label */
+        // no need to cast to button view here since we can add a listener to any view, this
+        // is the single image selection
         label = (TextView)findViewById(R.id.label);
+        findViewById(R.id.buttonGallery).setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View arg0) {
 
-	      /* Get the reference to the "next" button */
-        Button buttonNext = (Button)findViewById(R.id.buttonNext);
-
-	      /* Shows the next image when the "next" button is clicked */
-        buttonNext.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0)
-            {
-					/* No files to show */
-                if(files.size() == 0) return;
-
-					/* Increment the index */
-                ++imgIdx;
-
-					/* Is this the end of the list? Go back to the beginning */
-                if(imgIdx == files.size())
-                    imgIdx = 0;
-
-					/* Load the bitmap */
-                Bitmap bitmap = loadBitmapFromAssets(files.get(imgIdx));
-
-                System.out.println("Image width: "+ bitmap.getWidth());
-
-					/* Show the image */
-                showImage(bitmap, files.get(imgIdx));
-
+                // in onCreate or any event where your want the user to
+                // select a file
+                Intent intent = new Intent();
+                intent.setType(IMAGE_TYPE);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,
+                        "Select image"), SELECT_SINGLE_PICTURE);
             }
         });
 
+        // multiple image selection
 
 
-	      /* Get the reference to the "Previous" button */
-        Button buttonPrev = (Button)findViewById(R.id.buttonPrev);
-
-	      /* Shows the next image when the "next" button is clicked */
-        buttonPrev.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0)
-            {
-						/* No files to show */
-                if(files.size() == 0) return;
-
-						/* Is this the end of the list? Go back to the beginning */
-                if(imgIdx == 0)
-                    imgIdx = files.size() - 1;
-						/* Otherwise, increment the index */
-                else
-							/* Decrement the index */
-                    --imgIdx;
-
-						/* Load the bitmap */
-                Bitmap bitmap = loadBitmapFromAssets(files.get(imgIdx));
-
-						/* Show the image */
-                showImage(bitmap, files.get(imgIdx));
-
-
-            }
-
-        });
-
-
-
-	      /* Load the first image */
-        if(files.size() != 0)
-        {
-	    	 /* Load the first image */
-            showImage(loadBitmapFromAssets(files.get(0)), files.get(0));
-        }
+        selectedImagePreview = (ImageView)findViewById(R.id.imageView1);
     }
 
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_SINGLE_PICTURE) {
 
+                Uri selectedImageUri = data.getData();
+                String selectedImagePath = getPath(selectedImageUri);
+                //Bitmap bmp=BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImageUri));
+
+                //showImage(bitmap)
+                ;
+                try {
+                    selectedImagePreview.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
+                    Bitmap bitmap=BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImageUri));
+                    showImage(bitmap);
+                } catch (IOException e) {
+                    Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
+                    e.printStackTrace();
+                }
+
+                // original code
+//                String selectedImagePath = getPath(selectedImageUri);
+//                selectedImagePreview.setImageURI(selectedImageUri);
+            }
+            else if (requestCode == SELECT_MULTIPLE_PICTURE) {
+                //And in the Result handling check for that parameter:
+                if (Intent.ACTION_SEND_MULTIPLE.equals(data.getAction())
+                        && data.hasExtra(Intent.EXTRA_STREAM)) {
+                    // retrieve a collection of selected images
+                    ArrayList<Parcelable> list = data.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+                    // iterate over these images
+                    if( list != null ) {
+                        for (Parcelable parcel : list) {
+                            Uri uri = (Uri) parcel;
+                            // handle the images one by one here
+                        }
+                    }
+
+                    // for now just show the last picture
+                    if( !list.isEmpty() ) {
+                        Uri imageUri = (Uri) list.get(list.size() - 1);
+
+                        try {
+                            selectedImagePreview.setImageBitmap(new UserPicture(imageUri, getContentResolver()).getBitmap());
+                        } catch (IOException e) {
+                            Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
+                        }
+                        // original code
+//                        String selectedImagePath = getPath(imageUri);
+//                        selectedImagePreview.setImageURI(imageUri);
+//                        displayPicture(selectedImagePath, selectedImagePreview);
+                    }
+                }
+            }
+        } else {
+            // report failure
+            Toast.makeText(getApplicationContext(),"failed to get intent data", Toast.LENGTH_LONG).show();
+            Log.d(MainActivity.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
+        }
+    }
+
+    /**
+     * helper to retrieve the path of an image URI
+     */
+    public String getPath(Uri uri) {
+
+        // just some safety built in
+        if( uri == null ) {
+            // perform some logging or show user feedback
+            Toast.makeText(getApplicationContext(), "failed to get picture", Toast.LENGTH_LONG).show();
+            Log.d(MainActivity.class.getSimpleName(), "Failed to parse image path from image URI " + uri);
+            return null;
+        }
+
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        // this is our fallback here, thanks to the answer from @mad indicating this is needed for
+        // working code based on images selected using other file managers
+        return uri.getPath();
+    }
+
+
+//    /**
+//     * helper to scale down image before display to prevent render errors:
+//     * "Bitmap too large to be uploaded into a texture"
+//     */
+    private void displayPicture(String imagePath, ImageView imageView) {
+
+        // from http://stackoverflow.com/questions/22633638/prevent-bitmap-too-large-to-be-uploaded-into-a-texture-android
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 4;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        int height = bitmap.getHeight(), width = bitmap.getWidth();
+
+        if (height > 1280 && width > 960){
+            Bitmap imgbitmap = BitmapFactory.decodeFile(imagePath, options);
+            imageView.setImageBitmap(imgbitmap);
+        } else {
+            imageView.setImageBitmap(bitmap);
+        }
+        showImage(bitmap);
+    }
 
 
 }
+
