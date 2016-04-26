@@ -42,6 +42,13 @@
 
 
         <Button
+            android:id="@+id/buttonCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Take Picture"
+            android:layout_gravity="right"
+            android:onClick="buttonCamera" />
+        <Button
             android:id="@+id/buttonGallery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
