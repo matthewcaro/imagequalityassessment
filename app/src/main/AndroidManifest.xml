@@ -18,8 +18,10 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <uses-feature android:name="android.hardware.camera"></uses-feature>
                 <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
                 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+                <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
             </intent-filter>
         </activity>
     </application>

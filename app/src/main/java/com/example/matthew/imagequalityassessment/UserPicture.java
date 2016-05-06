@@ -165,7 +165,7 @@ public class UserPicture {
         if (!orientation.isIdentity()) {
             picture = Bitmap.createBitmap(subSampled, 0, 0, options.outWidth, options.outHeight,
                     orientation, false);
-            subSampled.recycle();
+//            subSampled.recycle();
         } else
             picture = subSampled;
 

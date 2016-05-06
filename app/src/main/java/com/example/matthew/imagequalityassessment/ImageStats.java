@@ -343,52 +343,52 @@ class ImageStats
 		        /* Count the pixel */
             ++pixNum;
         }
-        for(int pixelRGB : pixels)
-        {
-				/* Compute the X and Y coordinates of the pixel */
-            yCoord = pixNum / imageWidth;
-            xCoord = pixNum - (yCoord * imageWidth);
-
-				/* Get the red component. */
-            red = (pixelRGB >> 16) & 0xff;
-
-			    /* Get the green component. */
-            green = (pixelRGB >> 8) & 0xff;
-
-			    /* Get the blue component */
-            blue = (pixelRGB) & 0xff;
-
-				/* In BW, would this pixel be black and white? */
-            if(((int) (RedWt * red + GreenWt * green + BlueWt * blue)) < 128)
-            {
-					/* Add the x coordinate to Y coordinate */
-                this.centerOfMassX += xCoord;
-                this.centerOfMassY += yCoord;
-
-                //image.setPixel(xCoord, yCoord, Color.BLACK);
-
-            }
-            //else image.setPixel(xCoord, yCoord, Color.WHITE);
-
-				/* The intensity matrix. Note: we divide by 255 in order to normalize the intensity
-				 * values so they fall within the [0..1] range.
-				 */
-            pintensity = ((0.299*red) + (0.587*green) + (0.114*blue))/255;
-
-			    /* Compute and aggregate the standard luminosity of this pixel */
-            this.avgPerceivedLum += pintensity;
-
-		        /* Update the square sum */
-            squareSum += (intensity * intensity);
-
-
-
-		        /* Count the pixel */
-            ++pixNum;
-        }
-
-		/* Compute the average perceived luminosity */
-        this.avgPerceivedLum = this.avgPerceivedLum / (imageHeight * imageWidth);
+//        for(int pixelRGB : pixels)
+//        {
+//				/* Compute the X and Y coordinates of the pixel */
+//            yCoord = pixNum / imageWidth;
+//            xCoord = pixNum - (yCoord * imageWidth);
+//
+//				/* Get the red component. */
+//            red = (pixelRGB >> 16) & 0xff;
+//
+//			    /* Get the green component. */
+//            green = (pixelRGB >> 8) & 0xff;
+//
+//			    /* Get the blue component */
+//            blue = (pixelRGB) & 0xff;
+//
+//				/* In BW, would this pixel be black and white? */
+//            if(((int) (RedWt * red + GreenWt * green + BlueWt * blue)) < 128)
+//            {
+//					/* Add the x coordinate to Y coordinate */
+//                this.centerOfMassX += xCoord;
+//                this.centerOfMassY += yCoord;
+//
+//                //image.setPixel(xCoord, yCoord, Color.BLACK);
+//
+//            }
+//            //else image.setPixel(xCoord, yCoord, Color.WHITE);
+//
+//				/* The intensity matrix. Note: we divide by 255 in order to normalize the intensity
+//				 * values so they fall within the [0..1] range.
+//				 */
+//            pintensity = ((0.299*red) + (0.587*green) + (0.114*blue))/255;
+//
+//			    /* Compute and aggregate the standard luminosity of this pixel */
+//            this.avgPerceivedLum += pintensity;
+//
+//		        /* Update the square sum */
+//            squareSum += (intensity * intensity);
+//
+//
+//
+//		        /* Count the pixel */
+//            ++pixNum;
+//        }
+//
+//		/* Compute the average perceived luminosity */
+//        this.avgPerceivedLum = this.avgPerceivedLum / (imageHeight * imageWidth);
 
 		/* Compute the average standard luminosity */
         this.avgStandardLum = this.avgStandardLum / (imageHeight * imageWidth);
