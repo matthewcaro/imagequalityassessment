@@ -148,11 +148,11 @@ public class UserPicture {
         int height = (int) rect.height();
         int subSample = 1;
 
-        while (width > MAX_WIDTH || height > MAX_HEIGHT) {
-            width /= 2;
-            height /= 2;
-            subSample *= 2;
-        }
+//        while (width > MAX_WIDTH || height > MAX_HEIGHT) {
+//            width /= 2;
+//            height /= 2;
+//            subSample *= 2;
+//        }
 
         if (width == 0 || height == 0)
             throw new InvalidObjectException(null);
@@ -165,7 +165,7 @@ public class UserPicture {
         if (!orientation.isIdentity()) {
             picture = Bitmap.createBitmap(subSampled, 0, 0, options.outWidth, options.outHeight,
                     orientation, false);
-            subSampled.recycle();
+//            subSampled.recycle();
         } else
             picture = subSampled;
 

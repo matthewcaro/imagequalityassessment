@@ -17,8 +17,9 @@ class ImageStats
 
     /*luminosity*/
     double avgStandardLum = 0.0;
-    /*PERCEIVED luminosity*/
-    double avgPerceivedLum = 0.0;
+
+    /*PERCEIVED luminosity - Proved unimportant for our purposes*/
+    //double avgPerceivedLum = 0.0;
 
     /*contrast*/
     double avgContrast = 0.0;
@@ -66,12 +67,13 @@ class ImageStats
     int imageWidth;
     /*image height*/
     int imageHeight;
-    String result;
-    double GoodLum = 0.2;
-    double GoodCont = 0.4;
-    double GoodSharp = 2700;
-    double GoodOrient = 100;
 
+    /*A set of thresholds that can be decided for a accepted/rejected image - currently no specific requirements*/
+//    String result;
+//    double GoodLum = 0.2;
+//    double GoodCont = 0.4;
+//    double GoodSharp = 2700;
+//    double GoodOrient = 100;
 
 
     /*Set number values to statistics to be computed*/
@@ -253,7 +255,7 @@ class ImageStats
         double intensity = 0.0;
 
         /*The perceived intensity value*/
-        double pintensity = 0.0;
+        //double pintensity = 0.0;
 
 		/* The pixel array */
         pixels = new int[imageWidth * imageHeight];
@@ -264,24 +266,6 @@ class ImageStats
 
 		/* Run the image through a low-pass filter */
         dynamicProgLowPassFilter(image);
-
-        /**
-         FileOutputStream out;
-         try {
-         out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/out" + i + ".png");
-
-         image.compress(Bitmap.CompressFormat.PNG, 90, out);
-         } catch (Exception e) {
-         e.printStackTrace();
-         } finally {
-         try{
-         throw new Exception();
-         } catch(Throwable ignore) {}
-         }
-         **/
-
-
-
 
 		/* The X and y coordinates in the bitmap */
         int xCoord = 0, yCoord = 0;
@@ -317,15 +301,10 @@ class ImageStats
 				/* In BW, would this pixel be black and white? */
             if(((int) (RedWt * red + GreenWt * green + BlueWt * blue)) < 128)
             {
-					/* Add the x coordinate to Y coordinate */
+                /* Add the x coordinate to Y coordinate */
                 this.centerOfMassX += xCoord;
                 this.centerOfMassY += yCoord;
-
-                //image.setPixel(xCoord, yCoord, Color.BLACK);
-
             }
-            //else image.setPixel(xCoord, yCoord, Color.WHITE);
-
 				/* The intensity matrix. Note: we divide by 255 in order to normalize the intensity
 				 * values so they fall within the [0..1] range.
 				 */
@@ -334,61 +313,12 @@ class ImageStats
 			    /* Compute and aggregate the standard luminosity of this pixel */
             this.avgStandardLum += 	intensity;
 
-
 		        /* Update the square sum */
             squareSum += (intensity * intensity);
-
-
 
 		        /* Count the pixel */
             ++pixNum;
         }
-        for(int pixelRGB : pixels)
-        {
-				/* Compute the X and Y coordinates of the pixel */
-            yCoord = pixNum / imageWidth;
-            xCoord = pixNum - (yCoord * imageWidth);
-
-				/* Get the red component. */
-            red = (pixelRGB >> 16) & 0xff;
-
-			    /* Get the green component. */
-            green = (pixelRGB >> 8) & 0xff;
-
-			    /* Get the blue component */
-            blue = (pixelRGB) & 0xff;
-
-				/* In BW, would this pixel be black and white? */
-            if(((int) (RedWt * red + GreenWt * green + BlueWt * blue)) < 128)
-            {
-					/* Add the x coordinate to Y coordinate */
-                this.centerOfMassX += xCoord;
-                this.centerOfMassY += yCoord;
-
-                //image.setPixel(xCoord, yCoord, Color.BLACK);
-
-            }
-            //else image.setPixel(xCoord, yCoord, Color.WHITE);
-
-				/* The intensity matrix. Note: we divide by 255 in order to normalize the intensity
-				 * values so they fall within the [0..1] range.
-				 */
-            pintensity = ((0.299*red) + (0.587*green) + (0.114*blue))/255;
-
-			    /* Compute and aggregate the standard luminosity of this pixel */
-            this.avgPerceivedLum += pintensity;
-
-		        /* Update the square sum */
-            squareSum += (intensity * intensity);
-
-
-
-		        /* Count the pixel */
-            ++pixNum;
-        }
-
-		/* Compute the average perceived luminosity */
-        this.avgPerceivedLum = this.avgPerceivedLum / (imageHeight * imageWidth);
 
 		/* Compute the average standard luminosity */
         this.avgStandardLum = this.avgStandardLum / (imageHeight * imageWidth);
@@ -406,22 +336,22 @@ class ImageStats
         this.geoCenterX = (imageHeight - 1) / 2;
         this.geoCenterY = (imageWidth - 1) / 2;
 
-
 		/* Compute the Euclidean distance between the center of mass and and the geometric center */
         this.faceOrientationIndex = Math.sqrt(Math.pow(this.centerOfMassX - this.geoCenterX, 2.0) +
-                Math.pow(this.centerOfMassY - this.geoCenterX, 2.0));
+                Math.pow(this.centerOfMassY - this.geoCenterY, 2.0));
 
 
 		/* The state of the class is valid */
         this.valid = true;
 
-        /*Compare actual values to acceptable values to decide if image should be accepted*/
-        if ((avgContrast <= GoodCont) && (avgSharp<= GoodSharp) && (avgStandardLum >= GoodLum) && (faceOrientationIndex >= GoodOrient))
-        {
-
-            result = "Acceptable image";
-        }
-        else result = "Unacceptable image";
+//        DECIDED NOT TO USE THIS SINCE THERE IS NO UNIVERSAL ACCEPTED LEVELS FOR FACE CONTRAST/SHARPNESS/LUMINOSITY
+//          /*Compare actual values to acceptable values to decide if image should be accepted*/
+//        if ((avgContrast <= GoodCont) && (avgSharp<= GoodSharp) && (avgStandardLum >= GoodLum) && (faceOrientationIndex >= GoodOrient))
+//        {
+//
+//            result = "Acceptable image";
+//        }
+//        else result = "Unacceptable image";
     }
 
 }
