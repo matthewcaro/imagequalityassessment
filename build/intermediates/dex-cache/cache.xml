@@ -2,53 +2,39 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\exploded-aar\com.android.support\design\22.2.1\jars\classes.jar"
-        jumboMode="true"
+        jar="C:\Users\Matthew\ImageQualityAssessment\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
+        jumboMode="false"
         revision="22.0.1"
-        sha1="1821601ddbec5ff125653097812823388700af74">
-        <dex dex="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-22.2.1_0c23d94ba2af34e7723db2f8c101a118eb4292cb\classes.dex" />
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="C:\Users\Matthew\ImageQualityAssessment\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-22.2.1_cf8531c478eafd1cc3eff7d9d9a481d15160889f.jar" />
     </item>
     <item
-        jar="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
+        jar="C:\Users\Matthew\ImageQualityAssessment\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
+        jumboMode="false"
         revision="22.0.1"
-        sha1="54ed5fa9e32ffa66a21fbce5fb339aad131a4521">
-        <dex dex="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_4c19315619cb12d831495069e0b316cf32252c2f\classes.dex" />
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="C:\Users\Matthew\ImageQualityAssessment\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.1_412f452e253c698f7f22449de7e85374c5a93a12.jar" />
     </item>
     <item
-        jar="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
+        jar="C:\Users\Matthew\ImageQualityAssessment\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
+        jumboMode="false"
         revision="22.0.1"
-        sha1="ca5ece729cbc7c109794dcb6a83fb885fab4c7fa">
-        <dex dex="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_59bce332094a9fe35d13b59df3056b368d20dfda\classes.dex" />
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="C:\Users\Matthew\ImageQualityAssessment\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-22.2.1_42863f3141515db999675606585852b811afbfa1.jar" />
     </item>
     <item
         jar="C:\Users\Matthew\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
-        jumboMode="true"
+        jumboMode="false"
         revision="22.0.1"
         sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
-        <dex dex="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-22.2.1_ba5382efebc41078725535e334444563139faeff\classes.dex" />
+        <dex dex="C:\Users\Matthew\ImageQualityAssessment\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.1_ba5382efebc41078725535e334444563139faeff.jar" />
     </item>
     <item
-        jar="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
-        jumboMode="true"
+        jar="C:\Users\Matthew\ImageQualityAssessment\app\build\intermediates\exploded-aar\com.android.support\design\22.2.1\jars\classes.jar"
+        jumboMode="false"
         revision="22.0.1"
-        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
-        <dex dex="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-22.2.1_4b686601c3039ce5e0b926cd0fed382f5203271b\classes.dex" />
-    </item>
-    <item
-        jar="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
-        jumboMode="true"
-        revision="22.0.1"
-        sha1="f8efd0096475e0daf054267b61544e10dc776503">
-        <dex dex="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-22.2.1_4637436ea584ed3122c6cc4a06a3a8c85bb693d6\classes.dex" />
-    </item>
-    <item
-        jar="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
-        jumboMode="true"
-        revision="22.0.1"
-        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
-        <dex dex="C:\Users\Matthew\Desktop\FaceImageQualityAssesment\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-22.2.1_f639e0612d3f16c861a328f6c0d3020a3ac11152\classes.dex" />
+        sha1="1821601ddbec5ff125653097812823388700af74">
+        <dex dex="C:\Users\Matthew\ImageQualityAssessment\app\build\intermediates\pre-dexed\debug\com.android.support-design-22.2.1_a630d36cecc9d5e7f4e989da7c8574c3d7c46b08.jar" />
     </item>
 
 </items>
